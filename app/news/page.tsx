@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import BackButton from "@/components/ui/BackButton";
+import { getAllNews } from "@/lib/api/news";
 
 type NewsItem = {
     slug: string;
@@ -16,11 +17,7 @@ export default function NewsPage() {
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/news")
-            .then((res) => {
-                if (!res.ok) throw new Error();
-                return res.json();
-            })
+        getAllNews()
             .then(setNews)
             .catch(() => setError(true));
     }, []);

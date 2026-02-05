@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import BackButton from "@/components/ui/BackButton";
 import Link from "next/link";
+import { getNewsBySlug } from "@/lib/api/news";
 
 type News = {
     title: string;
@@ -16,8 +17,9 @@ export default function NewsDetailPage() {
     const [news, setNews] = useState<News | null>(null);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/news/${slug}`)
-            .then((res) => res.json())
+        if (!slug) return;
+
+        getNewsBySlug(slug)
             .then(setNews);
     }, [slug]);
 

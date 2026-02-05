@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { getLatestNews } from "@/lib/api/news";
 
 type NewsItem = {
     slug: string;
@@ -15,11 +16,7 @@ export default function NewsSection() {
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/news/latest")
-            .then((res) => {
-                if (!res.ok) throw new Error();
-                return res.json();
-            })
+        getLatestNews()
             .then(setNews)
             .catch(() => setError(true));
     }, []);
